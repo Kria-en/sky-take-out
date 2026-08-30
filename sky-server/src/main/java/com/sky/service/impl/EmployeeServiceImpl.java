@@ -9,6 +9,7 @@ import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
@@ -115,5 +116,72 @@ public class EmployeeServiceImpl implements EmployeeService {
         //3. 封装分页结果
         Page<Employee> p=(Page<Employee>) empList;
         return new PageResult(p.getTotal(),p.getResult());
+    }
+
+    /**
+     * 启用禁用员工账号
+     *
+     * @Param status
+     * @Param id
+     * @return
+     */
+    @Override
+    public void startOrStop(Integer status, Long id) {
+        // update employee set status = ? where id = ?
+
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+
+        employeeMapper.update(employee);
+    }
+
+
+    /**
+     * 根据id查询回显
+     *
+     * @Param id
+     */
+    @Override
+    public Employee getById(Long id) {
+        return employeeMapper.getById(id);
+    }
+
+
+    /**
+     * 修改员工信息
+     *
+     * @Param employee
+     * @return employee
+     */
+    @Override
+    public void update(Employee employee) {
+        employee.setUpdateTime(LocalDateTime.now());
+        Long currentId = BaseContext.getCurrentId();
+        employee.setUpdateUser(currentId);
+        employeeMapper.update(employee);
+    }
+
+
+    /**
+     * 修改密码
+     *
+     * @Param password
+     * @return
+     */
+    @Override
+    public void updatePassword(PasswordEditDTO passwordEditDTO) {
+        Long empId = BaseContext.getCurrentId();  // 使用拦截器解析的当前用户 ID
+        //根据用户ID查询数据库中的数据
+        Employee employee = employeeMapper.getById(empId);
+        String password = DigestUtils.md5DigestAsHex(passwordEditDTO.getOldPassword().getBytes());
+        //密码错误
+        if(!password.equals(employee.getPassword())) {
+            throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
+        }
+        String newPassword=DigestUtils.md5DigestAsHex(passwordEditDTO.getNewPassword().getBytes());
+        employee.setPassword(newPassword);
+        employeeMapper.update(employee);
     }
 }
