@@ -88,7 +88,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         //设置默认密码123456
         employee.setPassword(DigestUtils.md5DigestAsHex((PasswordConstant.DEFAULT_PASSWORD).getBytes()));
 
-        //设置创建时间和最后修改时间
+        /*
+        // 设置创建时间和最后修改时间
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
 
@@ -96,6 +97,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Long currentUserId = BaseContext.getCurrentId();
         employee.setCreateUser(currentUserId != null ? currentUserId : 10L);
         employee.setUpdateUser(currentUserId != null ? currentUserId : 10L);
+        //在有自定义注释后删去,不需要了,这些都是公共字段
+        */
 
         //存入数据库
         employeeMapper.insert(employee);
@@ -157,9 +160,15 @@ public class EmployeeServiceImpl implements EmployeeService {
      */
     @Override
     public void update(Employee employee) {
+
+/*
         employee.setUpdateTime(LocalDateTime.now());
         Long currentId = BaseContext.getCurrentId();
         employee.setUpdateUser(currentId);
+        //在有自定义注释后删去,不需要了,这些都是公共字段
+*/
+
+
         employeeMapper.update(employee);
     }
 
@@ -180,8 +189,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(!password.equals(employee.getPassword())) {
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }
+
         String newPassword=DigestUtils.md5DigestAsHex(passwordEditDTO.getNewPassword().getBytes());
         employee.setPassword(newPassword);
+
+/*
+        employee.setUpdateUser(empId);
+        employee.setUpdateTime(LocalDateTime.now());
+        //在有自定义注释后删去,不需要了,这些都是公共字段
+*/
+
         employeeMapper.update(employee);
     }
 }
