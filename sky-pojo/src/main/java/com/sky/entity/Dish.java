@@ -47,4 +47,7 @@ public class Dish implements Serializable {
 
     private Long updateUser;
 
+    //菜品分类名称（冗余字段，关联category表后展示用）
+    private String categoryName;
+
 }
