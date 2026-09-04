@@ -6,6 +6,7 @@ import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public interface DishMapper {
      *@param dishDTO
      */
     @AutoFill(OperationType.INSERT)
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert("insert into dish(id, name, category_id, price, image, description, status, create_time, update_time, create_user, update_user) " +
             "VALUES (#{id},#{name},#{categoryId},#{price},#{image},#{description},#{status},#{createTime},#{updateTime},#{createUser},#{updateUser})")
     void insert(Dish dish);
@@ -39,5 +41,16 @@ public interface DishMapper {
      */
     List<Dish> list(DishPageQueryDTO dishPageQueryDTO);
 
-    void deleteById(List<Integer> ids);
+    /*
+     *删除菜品
+     *@param dishPageQueryDTO
+     */
+    void deleteById(List<Long> ids);
+
+    /*
+     *根据ID查询菜品--查询回显
+     *@param id
+     */
+    @Select("select * from dish where id=#{id}")
+    Dish getById(Long id);
 }
