@@ -4,10 +4,7 @@ import com.sky.annotation.AutoFill;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -60,4 +57,13 @@ public interface DishMapper {
      */
     @AutoFill(OperationType.UPDATE)
     void updateById(Dish dish);
+
+    /*
+     *修改菜品状态
+     *@param status
+     *@param id
+     */
+    @AutoFill(OperationType.UPDATE)
+    @Update("update dish set status=#{status} where id=#{id}")
+    void updateStatus(Integer status, Long id);
 }

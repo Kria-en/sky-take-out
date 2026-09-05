@@ -80,7 +80,7 @@ public class DishController {
 
     /*
      *修改菜品
-     *@param
+     *@param dishDTO
      */
     @PutMapping
     @ApiOperation("修改菜品")
@@ -89,5 +89,20 @@ public class DishController {
         dishService.update(dishDTO);
         return Result.success(dishDTO);
     }
+
+    /*
+     *修改菜品状态
+     *@param status
+     *@param id
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("修改菜品状态")
+    public Result updateStatus(@PathVariable Integer status,  Long id){
+        log.info("修改菜品状态: status={},id= {}",status,id);
+        dishService.updateStatus(status,id);
+        return Result.success();
+    }
+
+
 
 }
