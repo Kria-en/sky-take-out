@@ -1,12 +1,16 @@
 package com.sky.mapper;
 
 import com.sky.annotation.AutoFill;
+import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.enumeration.OperationType;
+import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface SetmealMapper {
@@ -29,4 +33,11 @@ public interface SetmealMapper {
             "values (#{name}, #{image}, #{categoryId}, #{price}, #{description}, #{status}, #{createTime}, #{updateTime})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Setmeal setmealDTO);
+
+    /**
+     * 根据分类id查询套餐
+     * @param setmealPageQueryDTO
+     * @return
+     */
+    List<SetmealVO> list(SetmealPageQueryDTO setmealPageQueryDTO);
 }
