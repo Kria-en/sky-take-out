@@ -17,5 +17,9 @@
         </where>
         order by s.update_time desc
     </select>
+    <select id="getById" resultType="com.sky.vo.SetmealVO">
+        select s.*,c.name as category_name from setmeal as s left join category as c on s.category_id = c.id
+        where s.id = #{id}
+    </select>
 
 </mapper>

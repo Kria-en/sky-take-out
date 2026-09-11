@@ -40,4 +40,11 @@ public interface SetmealMapper {
      * @return
      */
     List<SetmealVO> list(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * 根据id查询套餐
+     * @param id
+     * @return
+     */
+    SetmealVO getById(Integer id);
 }

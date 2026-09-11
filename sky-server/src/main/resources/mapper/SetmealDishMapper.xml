@@ -5,7 +5,7 @@
 
     <insert id="insertBatch">
         insert into setmeal_dish (setmeal_id, dish_id, name, price, copies) values
-        <foreach collection='list' item='dish' separator=','>
+        <foreach collection='setmealDishes' item='dish' separator=','>
             (#{dish.setmealId}, #{dish.dishId}, #{dish.name}, #{dish.price}, #{dish.copies})
         </foreach>
     </insert>

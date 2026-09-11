@@ -65,4 +65,20 @@ public class SerMealServiceImpl implements SetMealService {
         return new PageResult(pageResult.getTotal(), pageResult.getResult());
     }
 
+
+    /**
+     * 根据id查询套餐
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public SetmealVO getById(Integer id) {
+        SetmealVO setmealVO = setmealMapper.getById(id);
+        // 1. 根据套餐id查询套餐菜品关系
+        List<SetmealDish> setmealDishList = setmealDishMapper.listBySetmealId(id);
+        // 2. 拷贝到套餐VO
+        setmealVO.setSetmealDishes(setmealDishList);
+        return setmealVO;
+    }
 }
