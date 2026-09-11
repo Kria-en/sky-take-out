@@ -1,6 +1,11 @@
 package com.sky.mapper;
 
+import com.sky.annotation.AutoFill;
+import com.sky.entity.Setmeal;
+import com.sky.enumeration.OperationType;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
@@ -14,4 +19,14 @@ public interface SetmealMapper {
     @Select("select count(id) from setmeal where category_id = #{categoryId}")
     Integer countByCategoryId(Long id);
 
+
+    /**
+     * 新增套餐
+     * @param setmealDTO
+     */
+    @AutoFill(OperationType.INSERT)
+    @Insert("insert into setmeal (name, image, category_id, price, description, status, create_time, update_time) " +
+            "values (#{name}, #{image}, #{categoryId}, #{price}, #{description}, #{status}, #{createTime}, #{updateTime})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    void insert(Setmeal setmealDTO);
 }
