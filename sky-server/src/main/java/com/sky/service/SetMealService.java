@@ -41,4 +41,9 @@ public interface SetMealService {
      * 修改套餐
      */
     void update(SetmealDTO setmealDTO);
+
+    /**
+     * 套餐状态更新
+     */
+    void updateStatus(Long id, Integer status);
 }

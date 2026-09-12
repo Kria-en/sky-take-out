@@ -118,6 +118,14 @@ public class SerMealServiceImpl implements SetMealService {
 
     }
 
+     /**
+      * 套餐状态更新
+      */
+    @Override
+    @Transactional
+    public void updateStatus(Long id, Integer status) {
+        setmealMapper.updateStatus(id, status);
+    }
 
 
 }

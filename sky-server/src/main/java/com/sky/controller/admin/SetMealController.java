@@ -79,6 +79,15 @@ public class SetMealController {
         return Result.success();
     }
 
+    /**
+     * 套餐状态更新
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("套餐状态更新")
+    public Result updateStatus(@PathVariable Integer status, @RequestParam Long id){
+        setMealService.updateStatus(id, status);
+        return Result.success();
+    }
 
 
 }
