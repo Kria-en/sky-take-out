@@ -20,6 +20,7 @@
     <select id="getById" resultType="com.sky.vo.SetmealVO">
         select s.*,c.name as category_name from setmeal as s left join category as c on s.category_id = c.id
         where s.id = #{id}
+
     </select>
     <delete id="deleteBatch" parameterType="java.util.List">
         delete from setmeal where id in
@@ -28,4 +29,8 @@
         </foreach>
     </delete>
 
+    <update id="update" parameterType="com.sky.vo.SetmealVO">
+        update setmeal set name = #{name}, category_id = #{categoryId}, status = #{status}, update_time = #{updateTime}
+        where id = #{id}
+    </update>
 </mapper>

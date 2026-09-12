@@ -29,13 +29,13 @@ public interface SetmealMapper {
      * @param setmealDTO
      */
     @AutoFill(OperationType.INSERT)
-    @Insert("insert into setmeal (name, image, category_id, price, description, status, create_time, update_time) " +
-            "values (#{name}, #{image}, #{categoryId}, #{price}, #{description}, #{status}, #{createTime}, #{updateTime})")
+    @Insert("insert into setmeal (name, image, category_id, price, description, status, create_time, update_time,create_user,update_user) " +
+            "values (#{name}, #{image}, #{categoryId}, #{price}, #{description}, #{status}, #{createTime}, #{updateTime},#{createUser},#{updateUser})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(Setmeal setmealDTO);
 
     /**
-     * 根据分类id查询套餐
+     * 分页查询套餐
      * @param setmealPageQueryDTO
      * @return
      */
@@ -46,11 +46,18 @@ public interface SetmealMapper {
      * @param id
      * @return
      */
-    SetmealVO getById(Integer id);
+    SetmealVO getById(Long id);
 
     /**
      * 批量删除套餐
      * @param ids
      */
     void deleteBatch(List<Long> ids);
+
+    /**
+     * 修改套餐
+     * @param setmealVO
+     */
+    @AutoFill(OperationType.UPDATE)
+    void update(SetmealVO setmealVO);
 }

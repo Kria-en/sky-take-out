@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -73,7 +74,7 @@ public class SerMealServiceImpl implements SetMealService {
      * @return
      */
     @Override
-    public SetmealVO getById(Integer id) {
+    public SetmealVO getById(Long id) {
         SetmealVO setmealVO = setmealMapper.getById(id);
         // 1. 根据套餐id查询套餐菜品关系
         List<SetmealDish> setmealDishList = setmealDishMapper.listBySetmealId(id);
@@ -95,4 +96,28 @@ public class SerMealServiceImpl implements SetMealService {
         // 2. 批量删除套餐
         setmealMapper.deleteBatch(ids);
     }
+
+
+     /**
+      * 修改套餐
+      */
+    @Override
+    @Transactional
+    public void update(SetmealDTO setmealDTO) {
+       SetmealVO setmealVO=new SetmealVO();
+       BeanUtils.copyProperties(setmealDTO, setmealVO);
+       setmealMapper.update(setmealVO);
+       //1.处理套餐菜品关系
+        List<SetmealDish> dishes = setmealDTO.getSetmealDishes();
+        //2.批量删除套餐菜品关系
+        setmealDishMapper.deleteBySetmealId(setmealDTO.getId());
+        // 3. 还要给每个 dish 设置套餐ID，否则插入时 setmeal_id 是 null
+        dishes.forEach(dish -> dish.setSetmealId(setmealDTO.getId()));
+        //4.批量新增套餐菜品关系
+        setmealDishMapper.insertBatch(dishes);
+
+    }
+
+
+
 }

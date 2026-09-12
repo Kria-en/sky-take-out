@@ -3,6 +3,7 @@ package com.sky.controller.admin;
 
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.SetmealDish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.SetMealService;
@@ -47,11 +48,11 @@ public class SetMealController {
     }
 
     /**
-     * 根据id查询套餐
+     * 根据id查询套餐--查询回显套餐菜品
      */
     @GetMapping("/{id}")
     @ApiOperation("根据id查询套餐")
-    public Result getById(@PathVariable Integer id){
+    public Result getById(@PathVariable Long id){
         SetmealVO setmealVO=setMealService.getById(id);
         return Result.success(setmealVO);
     }
@@ -67,6 +68,17 @@ public class SetMealController {
         setMealService.deleteById(ids);
         return Result.success();
     }
+
+    /**
+     * 修改套餐
+     */
+    @PutMapping
+    @ApiOperation("修改套餐")
+    public Result update(@RequestBody SetmealDTO setmealDTO){
+        setMealService.update(setmealDTO);
+        return Result.success();
+    }
+
 
 
 }
