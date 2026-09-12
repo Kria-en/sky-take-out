@@ -81,4 +81,18 @@ public class SerMealServiceImpl implements SetMealService {
         setmealVO.setSetmealDishes(setmealDishList);
         return setmealVO;
     }
+
+    /**
+     * 批量删除套餐
+     *
+     * @param ids
+     */
+    @Override
+    @Transactional
+    public void deleteById(List<Long> ids) {
+        // 1. 批量删除套餐菜品关系
+        setmealDishMapper.deleteBatch(ids);
+        // 2. 批量删除套餐
+        setmealMapper.deleteBatch(ids);
+    }
 }

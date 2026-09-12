@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @Api(tags = "套餐管理")
@@ -55,6 +57,16 @@ public class SetMealController {
     }
 
 
+    /**
+     * 批量删除套餐
+     */
+    @DeleteMapping
+    @ApiOperation("批量删除套餐")
+    public Result deleteById(@RequestParam("ids") List<Long> ids){
+        log.info("批量删除套餐: ids={} ", ids);
+        setMealService.deleteById(ids);
+        return Result.success();
+    }
 
 
 }

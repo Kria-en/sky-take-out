@@ -47,4 +47,10 @@ public interface SetmealMapper {
      * @return
      */
     SetmealVO getById(Integer id);
+
+    /**
+     * 批量删除套餐
+     * @param ids
+     */
+    void deleteBatch(List<Long> ids);
 }
