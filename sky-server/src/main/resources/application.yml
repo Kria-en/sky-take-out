@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: dev
+    active: local
   main:
     allow-circular-references: true
   datasource:
@@ -38,7 +38,12 @@ sky:
     # 设置前端传递过来的令牌名称
     admin-token-name: token
 
-#阿里云OSS
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+    password: ${sky.redis.password}
+    database: ${sky.redis.database}
+
 oss:
   endpoint: ${sky.alioss.endpoint}
   bucket-name: ${sky.alioss.bucket-name}
