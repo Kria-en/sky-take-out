@@ -6,6 +6,11 @@ spring:
     active: local
   main:
     allow-circular-references: true
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+    password: ${sky.redis.password}
+    database: ${sky.redis.database}
   datasource:
     druid:
       driver-class-name: ${sky.datasource.driver-class-name}
@@ -37,12 +42,6 @@ sky:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
-
-  redis:
-    host: ${sky.redis.host}
-    port: ${sky.redis.port}
-    password: ${sky.redis.password}
-    database: ${sky.redis.database}
 
 oss:
   endpoint: ${sky.alioss.endpoint}
