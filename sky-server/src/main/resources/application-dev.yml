@@ -17,3 +17,8 @@ sky:
     port: ${sky.redis.port}
     password: ${sky.redis.password}
     database: ${sky.redis.database}
+  wechat:
+    # 设置微信小程序的appid
+    appid: ${sky.wechat.appid}
+    # 设置微信小程序的appsecret
+    secret: ${sky.wechat.secret}

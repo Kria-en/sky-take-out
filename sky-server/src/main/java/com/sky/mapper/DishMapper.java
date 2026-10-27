@@ -40,6 +40,12 @@ public interface DishMapper {
     List<Dish> list(DishPageQueryDTO dishPageQueryDTO);
 
     /*
+     *条件查询菜品（用户端）
+     *@param dish
+     */
+    List<Dish> listByDish(Dish dish);
+
+    /*
      *删除菜品
      *@param dishPageQueryDTO
      */
@@ -74,4 +80,6 @@ public interface DishMapper {
      */
     @Select("select * from dish where category_id = #{categoryId}")
     List<DishVO> listByCategoryId(Long categoryId);
+
+
 }
